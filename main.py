@@ -11,6 +11,9 @@ memos =[]
 
 app = FastAPI() 
 
+@app.get('/memos')
+def read_memo():
+    return memos
 
 @app.post("/memos")
 def create_memo(memo:Memo):
@@ -18,9 +21,10 @@ def create_memo(memo:Memo):
     print(memos)
     return "메모추가 성공했습니다."
 
-@app.get('/memos')
-def read_memo():
-    return memos
+@app.put('/memos')
+def edit_memo(value):
+    print(type(value))
+    return
 
 
 

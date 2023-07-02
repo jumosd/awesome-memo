@@ -1,8 +1,34 @@
+async function editMemo(memo) {
+  const edit_val = document.querySelector("#memo-input").value;
+  console.log(edit_val);
+  edit_val.innerText = "";
+  document.querySelector(`button[data-id='${memo.id}']`);
+
+  await fetch("/memos", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: id,
+      content: edit_val,
+    }),
+  });
+}
+
 function displayMemos(memo) {
   const ul = document.querySelector("#memo-ul");
   const li = document.createElement("li");
+  const crebutton = document.createElement("button");
   li.innerText = `[id: ${memo.id}] ${memo.content}`;
+
+  crebutton.dataset.id = memo.id;
+  crebutton.innerText = "수정하기";
+
   ul.append(li);
+  li.append(crebutton);
+  let button = document.querySelector(`button[data-id='${memo.id}']`);
+  button.addEventListener("click", editMemo);
 }
 
 // 메모 읽기
