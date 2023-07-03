@@ -1,8 +1,10 @@
-async function editMemo(memo) {
+async function editMemo(event) {
+  console.log(event.target.dataset["id"]);
   const edit_val = document.querySelector("#memo-input").value;
-  console.log(edit_val);
   edit_val.innerText = "";
-  document.querySelector(`button[data-id='${memo.id}']`);
+
+  // let memo_id = document.querySelector(`button[data-id='${memo.id}']`);
+  // console.log(memo_id);
 
   await fetch("/memos", {
     method: "PUT",
