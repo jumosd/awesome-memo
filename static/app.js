@@ -1,3 +1,12 @@
+async function deleteMemo(event) {
+  let target_id = event.target.dataset["id"];
+  const res = await fetch(`/memos/${target_id}`, {
+    method: "DELETE",
+  });
+
+  readMemo();
+}
+
 async function editMemo(event) {
   console.log(event.target);
   let target_id = event.target.dataset["id"];
@@ -5,7 +14,7 @@ async function editMemo(event) {
   const edit_val = document.querySelector("#memo-input").value;
   edit_val.innerText = "";
   console.log(edit_val);
-  await fetch(`/memos/${target_id}`, {
+  const res = await fetch(`/memos/${target_id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -15,7 +24,7 @@ async function editMemo(event) {
       content: edit_val,
     }),
   });
-
+  console.log(res);
   readMemo();
 }
 
@@ -23,15 +32,20 @@ function displayMemos(memo) {
   const ul = document.querySelector("#memo-ul");
   const li = document.createElement("li");
   const crebutton = document.createElement("button");
+  const delbutton = document.createElement("button");
   li.innerText = `[id: ${memo.id}] ${memo.content}`;
 
   crebutton.dataset.id = memo.id;
   crebutton.innerText = "수정하기";
+  crebutton.addEventListener("click", editMemo);
+
+  delbutton.dataset.id = memo.id;
+  delbutton.innerText = "삭제하기";
+  delbutton.addEventListener("click", deleteMemo);
 
   ul.append(li);
   li.append(crebutton);
-  let button = document.querySelector(`button[data-id='${memo.id}']`);
-  button.addEventListener("click", editMemo);
+  li.append(delbutton);
 }
 
 // 메모 읽기
