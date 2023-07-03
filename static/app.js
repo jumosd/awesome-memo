@@ -1,21 +1,22 @@
 async function editMemo(event) {
-  console.log(event.target.dataset["id"]);
+  console.log(event.target);
+  let target_id = event.target.dataset["id"];
+
   const edit_val = document.querySelector("#memo-input").value;
   edit_val.innerText = "";
-
-  // let memo_id = document.querySelector(`button[data-id='${memo.id}']`);
-  // console.log(memo_id);
-
-  await fetch("/memos", {
+  console.log(edit_val);
+  await fetch(`/memos/${target_id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: id,
+      id: target_id,
       content: edit_val,
     }),
   });
+
+  readMemo();
 }
 
 function displayMemos(memo) {

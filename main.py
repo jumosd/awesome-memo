@@ -21,10 +21,13 @@ def create_memo(memo:Memo):
     print(memos)
     return "메모추가 성공했습니다."
 
-@app.put('/memos')
-def edit_memo(value):
-    print(type(value))
-    return
+@app.put('/memos/{memo_id}')
+def edit_memo(req_memo:Memo):
+    for m in memos:
+        if m.id == req_memo.id:
+            m.content = req_memo.content
+            return "성공했습니다."
+    return "그런 메모 없습니다."
 
 
 
